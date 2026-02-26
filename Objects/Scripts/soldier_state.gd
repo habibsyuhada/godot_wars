@@ -62,9 +62,17 @@ func try_chase()  -> bool:
 		return true
 	return false
 
+#func deal_damage():
+	#if enemy.target != null and is_instance_valid(enemy.target) and enemy.target_in_attack_range:
+		#enemy.target.take_damage(enemy.attack_damage)
+
 func deal_damage():
-	if enemy.target != null and is_instance_valid(enemy.target) and enemy.target_in_attack_range:
-		enemy.target.take_damage(enemy.attack_damage)
+	if enemy.target == null or not is_instance_valid(enemy.target):
+		return
+	if not enemy.target_in_attack_range:
+		return
+	
+	enemy.perform_attack(enemy.target)
 #func get_distance_to_player() -> float:
 	#return player.global_position.distance_to(enemy.global_position)
 
@@ -79,9 +87,15 @@ func deal_damage():
 
 
 func _on_area_2d_body_entered(body: Node2D) -> void:
-	if enemy.target == null:
-		if body != enemy:
-			enemy.target = body
+	if not (body is Enemy):
+		return
+	if enemy.target != null:
+		return
+	if body == enemy:
+		return
+	if body.team == enemy.team:
+		return
+	enemy.target = body
 
 
 func _on_area_2d_body_exited(body: Node2D) -> void:

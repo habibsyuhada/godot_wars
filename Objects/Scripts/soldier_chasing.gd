@@ -6,8 +6,9 @@ extends EnemyState
 # Upon moving to this state, initialize the 
 # timer with a random duration.
 func enter():
-	print("ENTER CHASING")
-	print(enemy.target)
+	enemy.state = "CHASING"
+	#print("ENTER CHASING")
+	#print(enemy.target)
 	pass
 
 

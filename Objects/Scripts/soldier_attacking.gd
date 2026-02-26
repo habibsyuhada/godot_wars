@@ -8,7 +8,8 @@ func enter():
 		transitioned.emit(self, "idle")
 		return
 	
-	print("ENTER ATTACKING")
+	#print("ENTER ATTACKING")
+	enemy.state = "ATTACKING"
 	enemy.can_attack = false
 	enemy.velocity = Vector2.ZERO
 	animation_player.play(enemy.race.to_lower() + "_attack")
@@ -17,7 +18,8 @@ func enter():
 		deal_damage()
 		transitioned.emit(self, "idle")
 		
-		await get_tree().create_timer(enemy.attack_cooldown).timeout
+		#await get_tree().create_timer(enemy.attack_speed).timeout
+		await get_tree().create_timer(0.8).timeout
 		enemy.can_attack = true
 
 func on_timeout():

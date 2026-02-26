@@ -425,6 +425,7 @@ script = ExtResource("7_1wijp")
 
 [node name="Chasing" type="Node" parent="State"]
 script = ExtResource("8_o0b3k")
+chase_speed = null
 
 [node name="Attacking" type="Node" parent="State"]
 script = ExtResource("9_e6ja8")

@@ -13,7 +13,8 @@ var wander_timer : Timer
 # Upon moving to this state, initialize the 
 # timer with a random duration.
 func enter():
-	print("ENTER WANDERING")
+	#print("ENTER WANDERING")
+	enemy.state = "WANDERING"
 	wander_direction = Vector2.UP.rotated(deg_to_rad(randf_range(0, 360)))
 	wander_timer = Timer.new()
 	wander_timer.wait_time = randf_range(min_wander_time, max_wander_time)

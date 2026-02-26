@@ -17,7 +17,7 @@ func _physics_process(delta: float) -> void:
 		#animation_player.play(enemy.race.to_lower() + "_idle")
 		#return
 	
-	if enemy.velocity.x != 0:
+	if enemy.velocity.x < -5 or enemy.velocity.x > 5:
 		sprite.flip_h = enemy.velocity.x < 0
 	
 	#var animation_name = enemy.race.to_lower() + "_walk"
