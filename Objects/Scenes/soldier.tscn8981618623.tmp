@@ -425,12 +425,16 @@ script = ExtResource("7_1wijp")
 
 [node name="Chasing" type="Node" parent="State"]
 script = ExtResource("8_o0b3k")
+chase_speed = null
 
 [node name="Attacking" type="Node" parent="State"]
 script = ExtResource("9_e6ja8")
 
 [node name="Wandering" type="Node" parent="State"]
 script = ExtResource("10_m8jep")
+min_wander_time = null
+max_wander_time = null
+wander_speed = null
 
 [connection signal="body_entered" from="Vision" to="StateMachine" method="_on_area_2d_body_entered"]
 [connection signal="body_exited" from="Vision" to="StateMachine" method="_on_area_2d_body_exited"]

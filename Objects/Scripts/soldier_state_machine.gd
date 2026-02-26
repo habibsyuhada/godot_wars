@@ -25,16 +25,17 @@ func _ready():
 
 func _process(delta):
 	if current_state:
+		#print(current_state)
 		current_state.process_state(delta)
 
 
 func _physics_process(delta):
 	if current_state:
-		print("switch to "+current_state.name)
 		current_state.physics_process_state(delta)
 
 
 func on_child_transition(state: EnemyState, new_state_name: String):
+	#print("SIGNAL ", new_state_name)
 	if state != current_state:
 		return
 	

@@ -6,26 +6,30 @@ extends EnemyState
 # Upon moving to this state, initialize the 
 # timer with a random duration.
 func enter():
-	print("enter to chasing")
+	print("ENTER CHASING")
 	print(enemy.target)
 	pass
 
 
 func _physics_process(delta: float) -> void:
-	pass
-	#var direction := enemy.target.global_position - enemy.global_position
-	#
-	#var distance = direction.length()
-	#if distance > enemy.chase_radius:
-		#transitioned.emit(self, "wander")
-		#return
-	#
-	#enemy.velocity = direction.normalized()*chase_speed
-	#
-	#if distance <= enemy.follow_radius:
-		#enemy.velocity = Vector2.ZERO
-	#
-	#enemy.move_and_slide()
+	if enemy.target == null:
+		return
+		
+	var direction := enemy.target.global_position - enemy.global_position
+	enemy.velocity = direction.normalized()*chase_speed
+	
+	if enemy.target_in_attack_range and enemy.can_attack:
+		enemy.velocity = Vector2.ZERO
+		transitioned.emit(self, "attacking")
+		return
+	elif animation_player.current_animation != enemy.race.to_lower() + "_attack":
+		if enemy.target_in_attack_range: 
+			enemy.velocity = Vector2.ZERO
+			animation_player.play(enemy.race.to_lower() + "_idle")
+		else:
+			animation_player.play(enemy.race.to_lower() + "_walk")
+	
+	enemy.move_and_slide()
 
 
 # When leaving this state (for any reason), stop timer,

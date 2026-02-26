@@ -10,6 +10,7 @@ extends Node
 signal transitioned(state: EnemyState, new_state_name: String)
 
 @onready var enemy : Enemy = get_owner()
+@onready var animation_player: AnimationPlayer = $"../../AnimationPlayer"
 #var player : Player
 
 
@@ -55,7 +56,15 @@ func exit():
 	#
 	#return false
 
+func try_chase()  -> bool:
+	if enemy.target != null :
+		transitioned.emit(self, "chasing")
+		return true
+	return false
 
+func deal_damage():
+	if enemy.target != null and is_instance_valid(enemy.target) and enemy.target_in_attack_range:
+		enemy.target.take_damage(enemy.attack_damage)
 #func get_distance_to_player() -> float:
 	#return player.global_position.distance_to(enemy.global_position)
 
@@ -69,7 +78,22 @@ func exit():
 	#transitioned.emit(self, "stun")
 
 
-func _on_area_2d_body_entered(body):
-	if(enemy.target == null and body != enemy):
-		enemy.target = body
-		transitioned.emit(self, "chasing")
+func _on_area_2d_body_entered(body: Node2D) -> void:
+	if enemy.target == null:
+		if body != enemy:
+			enemy.target = body
+
+
+func _on_area_2d_body_exited(body: Node2D) -> void:
+	if enemy.target == body:
+		enemy.target = null
+		enemy.target_in_attack_range = false
+
+func _on_attack_range_body_entered(body: Node2D) -> void:
+	if enemy.target == body:
+		enemy.target_in_attack_range = true
+
+
+func _on_attack_range_body_exited(body: Node2D) -> void:
+	if enemy.target == body:
+		enemy.target_in_attack_range = false

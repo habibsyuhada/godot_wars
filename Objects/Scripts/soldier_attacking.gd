@@ -4,8 +4,21 @@ extends EnemyState
 # Upon moving to this state, initialize the 
 # timer with a random duration.
 func enter():
-	pass
-
+	if not enemy.can_attack:
+		transitioned.emit(self, "idle")
+		return
+	
+	print("ENTER ATTACKING")
+	enemy.can_attack = false
+	enemy.velocity = Vector2.ZERO
+	animation_player.play(enemy.race.to_lower() + "_attack")
+	await animation_player.animation_finished
+	if animation_player.current_animation != enemy.race.to_lower() + "_attack":
+		deal_damage()
+		transitioned.emit(self, "idle")
+		
+		await get_tree().create_timer(enemy.attack_cooldown).timeout
+		enemy.can_attack = true
 
 func on_timeout():
 	pass

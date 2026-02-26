@@ -13,6 +13,7 @@ var wander_timer : Timer
 # Upon moving to this state, initialize the 
 # timer with a random duration.
 func enter():
+	print("ENTER WANDERING")
 	wander_direction = Vector2.UP.rotated(deg_to_rad(randf_range(0, 360)))
 	wander_timer = Timer.new()
 	wander_timer.wait_time = randf_range(min_wander_time, max_wander_time)
@@ -24,8 +25,9 @@ func enter():
 func physics_process_state(delta: float):
 	enemy.velocity = wander_direction*wander_speed
 	enemy.move_and_slide()
+	animation_player.play(enemy.race.to_lower() + "_walk")
 	
-	#try_chase()
+	try_chase()
 
 
 func on_timer_finished():

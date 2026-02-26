@@ -35,4 +35,4 @@ position = Vector2(582, 363)
 race = "Skeleton"
 
 [node name="Soldier2" parent="Enemies" instance=ExtResource("2_bo1nx")]
-position = Vector2(618, 362)
+position = Vector2(670, 370)

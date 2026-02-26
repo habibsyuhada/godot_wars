@@ -13,17 +13,19 @@ func _physics_process(delta: float) -> void:
 		#animation_player.play("stunned")
 		#return
 	
-	if !enemy.velocity:
-		animation_player.play(enemy.race.to_lower() + "_idle")
-		return
+	#if !enemy.velocity:
+		#animation_player.play(enemy.race.to_lower() + "_idle")
+		#return
 	
-	sprite.flip_h = enemy.velocity.x < 0
+	if enemy.velocity.x != 0:
+		sprite.flip_h = enemy.velocity.x < 0
 	
-	var animation_name = enemy.race.to_lower() + "_walk"
+	#var animation_name = enemy.race.to_lower() + "_walk"
 	
-	if sprite.flip_h:
-		animation_name += "_left"
-	else:
-		animation_name += "_right"
+	#if sprite.flip_h:
+		#animation_name += "_left"
+	#else:
+		#animation_name += "_right"
 	
-	animation_player.play(animation_name)
+	#animation_player.play(animation_name)
+	#print(enemy.velocity)
