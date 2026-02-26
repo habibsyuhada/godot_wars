@@ -1,7 +1,7 @@
 [gd_scene load_steps=5 format=4 uid="uid://b28y8lme6ws7"]
 
 [ext_resource type="Texture2D" uid="uid://di6y8wbhcdl5q" path="res://Assets/Tilesets/spr_tileset_sunnysideworld_16px.png" id="1_jjgbg"]
-[ext_resource type="PackedScene" uid="uid://bwfthlfxfq177" path="res://Objects/Scenes/soldier.tscn" id="2_bo1nx"]
+[ext_resource type="PackedScene" uid="uid://cv80y4qdfq2yu" path="res://Objects/CapturePoint/CapturePoint.tscn" id="3_8gbba"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_bo1nx"]
 texture = ExtResource("1_jjgbg")
@@ -46,90 +46,5 @@ tile_set = SubResource("TileSet_8gbba")
 
 [node name="Enemies" type="Node" parent="."]
 
-[node name="Soldier" parent="Enemies" instance=ExtResource("2_bo1nx")]
-position = Vector2(418, 365)
-team = 2
-race = "Skeleton"
-
-[node name="Soldier2" parent="Enemies" instance=ExtResource("2_bo1nx")]
-position = Vector2(817, 423)
-
-[node name="Soldier3" parent="Enemies" instance=ExtResource("2_bo1nx")]
-position = Vector2(976, 480)
-
-[node name="Soldier4" parent="Enemies" instance=ExtResource("2_bo1nx")]
-position = Vector2(974, 203)
-
-[node name="Soldier5" parent="Enemies" instance=ExtResource("2_bo1nx")]
-position = Vector2(707, 187)
-
-[node name="Soldier6" parent="Enemies" instance=ExtResource("2_bo1nx")]
-position = Vector2(689, 561)
-
-[node name="Soldier7" parent="Enemies" instance=ExtResource("2_bo1nx")]
-position = Vector2(120, 107)
-team = 2
-race = "Skeleton"
-
-[node name="Soldier8" parent="Enemies" instance=ExtResource("2_bo1nx")]
-position = Vector2(350, 196)
-team = 2
-race = "Skeleton"
-
-[node name="Soldier9" parent="Enemies" instance=ExtResource("2_bo1nx")]
-position = Vector2(168, 328)
-team = 2
-race = "Skeleton"
-
-[node name="Soldier10" parent="Enemies" instance=ExtResource("2_bo1nx")]
-position = Vector2(257, 542)
-team = 2
-race = "Skeleton"
-
-[node name="Soldier11" parent="Enemies" instance=ExtResource("2_bo1nx")]
-position = Vector2(112, 513)
-team = 2
-race = "Skeleton"
-
-[node name="Soldier12" parent="Enemies" instance=ExtResource("2_bo1nx")]
-position = Vector2(267, 402)
-team = 2
-race = "Skeleton"
-
-[node name="Soldier13" parent="Enemies" instance=ExtResource("2_bo1nx")]
-position = Vector2(207, 189)
-team = 2
-race = "Skeleton"
-
-[node name="Soldier14" parent="Enemies" instance=ExtResource("2_bo1nx")]
-position = Vector2(386, 526)
-team = 2
-race = "Skeleton"
-
-[node name="Soldier15" parent="Enemies" instance=ExtResource("2_bo1nx")]
-position = Vector2(310, 70)
-team = 2
-race = "Skeleton"
-
-[node name="Soldier16" parent="Enemies" instance=ExtResource("2_bo1nx")]
-position = Vector2(396, 128)
-team = 2
-race = "Skeleton"
-
-[node name="Soldier17" parent="Enemies" instance=ExtResource("2_bo1nx")]
-position = Vector2(699, 317)
-
-[node name="Soldier18" parent="Enemies" instance=ExtResource("2_bo1nx")]
-position = Vector2(808, 82)
-
-[node name="Soldier19" parent="Enemies" instance=ExtResource("2_bo1nx")]
-position = Vector2(846, 272)
-
-[node name="Soldier20" parent="Enemies" instance=ExtResource("2_bo1nx")]
-position = Vector2(1044, 353)
-
-[node name="Soldier21" parent="Enemies" instance=ExtResource("2_bo1nx")]
-position = Vector2(878, 569)
-
-[node name="Soldier22" parent="Enemies" instance=ExtResource("2_bo1nx")]
-position = Vector2(675, 438)
+[node name="CapturePoint" parent="." instance=ExtResource("3_8gbba")]
+position = Vector2(551, 332)

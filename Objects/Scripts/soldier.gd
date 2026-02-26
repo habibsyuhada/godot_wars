@@ -22,12 +22,14 @@ extends CharacterBody2D
 
 # Runtime
 var target: Enemy
+var target_list := {}
 var target_in_attack_range := false
 var can_attack := true
 
 
 func _ready():
 	randomize()
+	add_to_group("unit")
 
 
 # ========== COMBAT ==========

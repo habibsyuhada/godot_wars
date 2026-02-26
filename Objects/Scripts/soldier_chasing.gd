@@ -14,6 +14,7 @@ func enter():
 
 func _physics_process(delta: float) -> void:
 	if enemy.target == null:
+		transitioned.emit(self, "idle")
 		return
 		
 	var direction := enemy.target.global_position - enemy.global_position

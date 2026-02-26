@@ -73,8 +73,29 @@ func deal_damage():
 		return
 	
 	enemy.perform_attack(enemy.target)
-#func get_distance_to_player() -> float:
-	#return player.global_position.distance_to(enemy.global_position)
+
+func _find_nearest_target():
+	var nearest: Enemy = null
+	var nearest_dist_sq := INF
+	var my_pos = enemy.global_position
+	var invalid := []
+
+	for body in enemy.target_list.keys():
+		if !is_instance_valid(body):
+			invalid.append(body)
+			continue
+
+		var dist_sq = my_pos.distance_squared_to(body.global_position)
+		if dist_sq < nearest_dist_sq:
+			nearest_dist_sq = dist_sq
+			nearest = body
+
+	for body in invalid:
+		enemy.target_list.erase(body)
+
+	return nearest
+
+
 
 
 # If you wanted to replace this functionality in a state you can either:
@@ -89,18 +110,25 @@ func deal_damage():
 func _on_area_2d_body_entered(body: Node2D) -> void:
 	if not (body is Enemy):
 		return
-	if enemy.target != null:
-		return
 	if body == enemy:
 		return
 	if body.team == enemy.team:
 		return
-	enemy.target = body
-
+	if enemy.target == null:
+		enemy.target = body
+	enemy.target_list[body] = true
+	
+	var my_pos = enemy.global_position
+	var new_dist = my_pos.distance_squared_to(body.global_position)
+	var cur_dist = my_pos.distance_squared_to(enemy.target.global_position)
+	if new_dist < cur_dist:
+		enemy.target = body
 
 func _on_area_2d_body_exited(body: Node2D) -> void:
+	enemy.target_list.erase(body)
+
 	if enemy.target == body:
-		enemy.target = null
+		enemy.target = _find_nearest_target()
 		enemy.target_in_attack_range = false
 
 func _on_attack_range_body_entered(body: Node2D) -> void:
