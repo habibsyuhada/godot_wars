@@ -4,7 +4,7 @@ extends EnemyState
 @export var max_wander_time := 10.0
 @export var wander_speed := 50.0
 
-@export var wander_radius := 200.0      # jarak roam dari source_point
+@export var wander_radius := 120.0      # jarak roam dari source_point
 @export var arrive_distance := 12.0     # dianggap "sampai" kalau jarak <= ini
 @export var repick_on_arrive := true    # kalau true: sampai target -> pilih target baru (tanpa nunggu timer)
 

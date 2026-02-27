@@ -6,15 +6,17 @@ signal owner_changed(point: CapturePoint, old_team: int, new_team: int)
 @export var capture_time := 3.0
 @export var PointConnectList: Array[CapturePoint] = []
 @export var owner_team: int = 0
-@export var target_point: CapturePoint = null
+@export var TargetPointList: Array[CapturePoint] = []
 
 @onready var timer: Timer = $Timer
+@onready var visual: CapturePointVisual = $Visual  # kalau node kamu masih bernama Pulse
 
 # team_id -> jumlah unit di area
 var _team_counts: Dictionary = {}
 var _capturing_team: int = 0
 
 func _ready() -> void:
+	print(self, " add to group capture_point")
 	add_to_group("capture_point")
 
 	# pastikan timer one_shot dan connect sekali
@@ -24,12 +26,30 @@ func _ready() -> void:
 	# connect sinyal area
 	body_entered.connect(_on_body_entered)
 	body_exited.connect(_on_body_exited)
+	
+	visual.set_owner_team(owner_team)
+	visual.set_capture_state(0, 0.0, false)
+	
+func _process(_delta: float) -> void:
+	if is_capturing():
+		# progress 0..1
+		var p: float = 1.0 - (timer.time_left / timer.wait_time)
+		visual.set_capture_state(_capturing_team, p, is_contested())
+	else:
+		# kalau nggak capturing tapi contested, tampilkan contested style
+		if is_contested():
+			visual.set_capture_state(0, 0.0, true)
+		else:
+			visual.set_capture_state(0, 0.0, false)
 
 func set_owner_team(new_team: int) -> void:
 	if owner_team == new_team:
 		return
 	var old_team := owner_team
 	owner_team = new_team
+	
+	visual.set_owner_team(owner_team)
+	visual.set_capture_state(0, 0.0, false)
 	
 	for body in get_overlapping_bodies():
 		if body == null:
@@ -108,6 +128,7 @@ func _start_capture(team: int) -> void:
 func _stop_capture() -> void:
 	_capturing_team = 0
 	timer.stop()
+	visual.set_capture_state(0, 0.0, is_contested())
 
 func _on_capture_timeout() -> void:
 	# sebelum ganti owner, cek lagi: masih valid (hanya 1 team dan dia masih ada)

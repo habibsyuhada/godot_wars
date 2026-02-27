@@ -19,7 +19,7 @@ func enter():
 		transitioned.emit(self, "idle")
 		
 		#await get_tree().create_timer(enemy.attack_speed).timeout
-		await get_tree().create_timer(0.8).timeout
+		await get_tree().create_timer(0.7).timeout
 		enemy.can_attack = true
 
 func on_timeout():

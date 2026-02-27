@@ -16,17 +16,22 @@ func _ready():
 	respawn_interval = gameplayteam.respawn_interval
 	team_id = gameplayteam.team_id
 	race = gameplayteam.race
+	print("ready team", team_id)
 
 	timer.wait_time = respawn_interval
 	timer.timeout.connect(_on_respawn_timeout)
 	timer.start()
+	
+	
+	print("points", get_tree().get_nodes_in_group("capture_point"))
 
 	for point in get_tree().get_nodes_in_group("capture_point"):
 		if not point.owner_changed.is_connected(_on_point_owner_changed):
 			point.owner_changed.connect(_on_point_owner_changed)
-
+			
 		if point.owner_team == team_id and point.owner_team != 0:
 			owned_points.append(point)
+			print("team", team_id, " point ", point)
 
 func _on_point_owner_changed(point, old_team: int, new_team: int):
 	if old_team == team_id:
@@ -35,6 +40,14 @@ func _on_point_owner_changed(point, old_team: int, new_team: int):
 	if new_team == team_id and new_team != 0:
 		if point not in owned_points:
 			owned_points.append(point)
+
+func calc_target_point_list(point):
+	var candidates: Array = point.PointConnectList.filter(
+		func(p): return p != null and p.owner_team != team_id
+	)
+	
+	point.TargetPointList = candidates
+	
 
 func _on_respawn_timeout():
 	if owned_points.is_empty():
