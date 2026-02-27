@@ -25,6 +25,8 @@ var target: Enemy
 var target_list := {}
 var target_in_attack_range := false
 var can_attack := true
+var target_point : CapturePoint = null
+var source_point : CapturePoint = null
 
 
 func _ready():

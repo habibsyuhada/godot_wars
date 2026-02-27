@@ -1,7 +1,9 @@
-[gd_scene load_steps=5 format=4 uid="uid://b28y8lme6ws7"]
+[gd_scene load_steps=7 format=4 uid="uid://b28y8lme6ws7"]
 
 [ext_resource type="Texture2D" uid="uid://di6y8wbhcdl5q" path="res://Assets/Tilesets/spr_tileset_sunnysideworld_16px.png" id="1_jjgbg"]
 [ext_resource type="PackedScene" uid="uid://cv80y4qdfq2yu" path="res://Objects/CapturePoint/CapturePoint.tscn" id="3_8gbba"]
+[ext_resource type="PackedScene" uid="uid://dafggg514ds0s" path="res://Objects/GameplayTeam/GameplayTeam.tscn" id="3_jjvhh"]
+[ext_resource type="PackedScene" uid="uid://bxcfheg0uf3mq" path="res://Objects/Camera/camera_rig.tscn" id="4_jjvhh"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_bo1nx"]
 texture = ExtResource("1_jjgbg")
@@ -46,5 +48,25 @@ tile_set = SubResource("TileSet_8gbba")
 
 [node name="Enemies" type="Node" parent="."]
 
-[node name="CapturePoint" parent="." instance=ExtResource("3_8gbba")]
+[node name="CapturePoint" parent="." node_paths=PackedStringArray("PointConnectList") instance=ExtResource("3_8gbba")]
 position = Vector2(551, 332)
+PointConnectList = [NodePath("../CapturePoint2"), NodePath("../CapturePoint3")]
+
+[node name="CapturePoint2" parent="." node_paths=PackedStringArray("PointConnectList") instance=ExtResource("3_8gbba")]
+position = Vector2(157, 334)
+PointConnectList = [NodePath("../CapturePoint")]
+owner_team = 1
+
+[node name="CapturePoint3" parent="." node_paths=PackedStringArray("PointConnectList") instance=ExtResource("3_8gbba")]
+position = Vector2(979, 340)
+PointConnectList = [NodePath("../CapturePoint")]
+owner_team = 2
+
+[node name="GameplayTeam" parent="." instance=ExtResource("3_jjvhh")]
+
+[node name="GameplayTeam2" parent="." instance=ExtResource("3_jjvhh")]
+team_id = 2
+race = "Skeleton"
+
+[node name="CameraRig" parent="." instance=ExtResource("4_jjvhh")]
+layers_root_path = NodePath("..")
