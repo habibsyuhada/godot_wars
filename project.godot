@@ -15,6 +15,10 @@ run/main_scene="uid://b28y8lme6ws7"
 config/features=PackedStringArray("4.5", "GL Compatibility")
 config/icon="res://icon.svg"
 
+[autoload]
+
+CaptureGraph="*res://Autoload/CaptureGraph.gd"
+
 [rendering]
 
 textures/canvas_textures/default_texture_filter=0
