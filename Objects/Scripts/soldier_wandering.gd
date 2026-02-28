@@ -34,15 +34,16 @@ func physics_process_state(delta: float):
 
 	# kalau sudah dekat target
 	if dist <= arrive_distance:
-		enemy.velocity = Vector2.ZERO
-		enemy.move_and_slide()
-
-		if repick_on_arrive:
-			_pick_new_target()
-			# timer tetap jalan; kalau kamu mau reset timer tiap arrive, uncomment:
-			# _restart_timer()
-		else:
-			animation_player.play(enemy.race.to_lower() + "_idle")
+		animation_player.play(enemy.race.to_lower() + "_idle")
+		#enemy.velocity = Vector2.ZERO
+		#enemy.move_and_slide()
+#
+		#if repick_on_arrive:
+			#_pick_new_target()
+			## timer tetap jalan; kalau kamu mau reset timer tiap arrive, uncomment:
+			## _restart_timer()
+		#else:
+			#animation_player.play(enemy.race.to_lower() + "_idle")
 	else:
 		var dir := to_target / dist # normalized tanpa panggil normalized() dua kali
 		enemy.velocity = dir * wander_speed

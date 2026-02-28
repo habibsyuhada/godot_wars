@@ -35,13 +35,9 @@ func find_point_timer_on_timeout():
 	# 1) tentuin goal
 	# opsi A: cari point musuh terdekat
 	var goal: CapturePoint = CaptureGraph.get_closest_enemy_point(enemy.source_point, enemy.team)
-
-	# opsi B: kalau semua sudah jadi tim kamu, tetap bergerak (misal ke point paling jauh)
-	if goal == null:
-		goal = CaptureGraph.get_farthest_point(enemy.source_point)
-
-	# 2) ambil next-hop (tetangga berikutnya) menuju goal
-	var next_point := CaptureGraph.get_next_point(enemy.source_point, goal)
+	var next_point = null
+	if not goal == null:
+		next_point = CaptureGraph.get_next_point(enemy.source_point, goal)
 
 	# fallback kalau tidak ada path (graph putus)
 	if next_point == null:
