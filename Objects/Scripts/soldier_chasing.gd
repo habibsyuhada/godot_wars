@@ -1,7 +1,5 @@
 extends EnemyState
 
-@export var chase_speed := 75.0
-
 
 # Upon moving to this state, initialize the 
 # timer with a random duration.
@@ -18,7 +16,7 @@ func _physics_process(delta: float) -> void:
 		return
 		
 	var direction := enemy.target.global_position - enemy.global_position
-	enemy.velocity = direction.normalized()*chase_speed
+	enemy.velocity = direction.normalized()*enemy.chase_speed
 	
 	if enemy.target_in_attack_range and enemy.can_attack:
 		transitioned.emit(self, "attacking")

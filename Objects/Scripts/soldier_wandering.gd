@@ -2,7 +2,6 @@ extends EnemyState
 
 @export var min_wander_time := 2.5
 @export var max_wander_time := 10.0
-@export var wander_speed := 50.0
 
 @export var wander_radius := 120.0      # jarak roam dari source_point
 @export var arrive_distance := 12.0     # dianggap "sampai" kalau jarak <= ini
@@ -46,7 +45,7 @@ func physics_process_state(delta: float):
 			#animation_player.play(enemy.race.to_lower() + "_idle")
 	else:
 		var dir := to_target / dist # normalized tanpa panggil normalized() dua kali
-		enemy.velocity = dir * wander_speed
+		enemy.velocity = dir * enemy.wander_speed
 		enemy.move_and_slide()
 		animation_player.play(enemy.race.to_lower() + "_walk")
 
