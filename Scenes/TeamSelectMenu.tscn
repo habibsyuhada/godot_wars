@@ -1,0 +1,25 @@
+[gd_scene load_steps=3 format=3 uid="uid://cuqkconxmhoan"]
+
+[ext_resource type="Script" uid="uid://cbnh54e500m07" path="res://Scenes/TeamSelectMenu.gd" id="1_jrhqy"]
+[ext_resource type="PackedScene" uid="uid://bdbt2g88u6xrg" path="res://Objects/UiPixelButton/ui_pixel_button.tscn" id="2_8jrk5"]
+
+[node name="TeamSelectMenu" type="Control"]
+layout_mode = 3
+anchors_preset = 0
+offset_right = 40.0
+offset_bottom = 40.0
+script = ExtResource("1_jrhqy")
+
+[node name="Label" type="Label" parent="."]
+layout_mode = 0
+offset_right = 40.0
+offset_bottom = 23.0
+
+[node name="Team1Button" parent="." instance=ExtResource("2_8jrk5")]
+layout_mode = 0
+
+[node name="Team2Button" parent="." instance=ExtResource("2_8jrk5")]
+layout_mode = 0
+
+[node name="BackButton" parent="." instance=ExtResource("2_8jrk5")]
+layout_mode = 0

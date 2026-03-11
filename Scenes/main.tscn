@@ -1,6 +1,7 @@
-[gd_scene load_steps=7 format=4 uid="uid://b28y8lme6ws7"]
+[gd_scene load_steps=8 format=4 uid="uid://b28y8lme6ws7"]
 
 [ext_resource type="Texture2D" uid="uid://di6y8wbhcdl5q" path="res://Assets/Tilesets/spr_tileset_sunnysideworld_16px.png" id="1_jjgbg"]
+[ext_resource type="Script" uid="uid://cj5v4xf0ilftk" path="res://Autoload/BattleScene.gd" id="1_kry3j"]
 [ext_resource type="PackedScene" uid="uid://cv80y4qdfq2yu" path="res://Objects/CapturePoint/CapturePoint.tscn" id="3_8gbba"]
 [ext_resource type="PackedScene" uid="uid://dafggg514ds0s" path="res://Objects/GameplayTeam/GameplayTeam.tscn" id="3_jjvhh"]
 [ext_resource type="PackedScene" uid="uid://bxcfheg0uf3mq" path="res://Objects/Camera/camera_rig.tscn" id="4_jjvhh"]
@@ -228,6 +229,7 @@ physics_layer_0/collision_layer = 1
 sources/0 = SubResource("TileSetAtlasSource_bo1nx")
 
 [node name="Main" type="Node2D"]
+script = ExtResource("1_kry3j")
 
 [node name="TileMapLayer" type="TileMapLayer" parent="."]
 z_index = -19

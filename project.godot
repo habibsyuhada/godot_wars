@@ -19,6 +19,7 @@ config/icon="res://icon.svg"
 
 CaptureGraph="*res://Autoload/CaptureGraph.gd"
 GlobalData="*res://Autoload/GlobalData.gd"
+GameState="*res://Autoload/GameState.gd"
 
 [rendering]
 

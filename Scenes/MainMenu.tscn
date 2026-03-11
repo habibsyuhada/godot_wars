@@ -1,0 +1,22 @@
+[gd_scene load_steps=3 format=3 uid="uid://dsqy1q7t2cnnr"]
+
+[ext_resource type="Script" uid="uid://fpnkq14j4apu" path="res://Scenes/MainMenu.gd" id="1_853f1"]
+[ext_resource type="PackedScene" uid="uid://bdbt2g88u6xrg" path="res://Objects/UiPixelButton/ui_pixel_button.tscn" id="1_tt5f1"]
+
+[node name="Control" type="Control"]
+layout_mode = 3
+anchors_preset = 0
+offset_right = 40.0
+offset_bottom = 40.0
+script = ExtResource("1_853f1")
+
+[node name="TitleLabel" type="Label" parent="."]
+layout_mode = 0
+offset_right = 40.0
+offset_bottom = 23.0
+
+[node name="StartButton" parent="." instance=ExtResource("1_tt5f1")]
+layout_mode = 0
+
+[node name="QuitButton" parent="." instance=ExtResource("1_tt5f1")]
+layout_mode = 0
