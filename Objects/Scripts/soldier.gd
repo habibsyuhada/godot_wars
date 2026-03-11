@@ -33,6 +33,7 @@ func _ready():
 	randomize()
 	add_to_group("unit")
 	apply_race_stats()
+	input_pickable = true
 
 
 func apply_race_stats():
@@ -76,13 +77,20 @@ func perform_attack(victim: Enemy) -> void:
 
 	victim.take_damage(dmg, is_crit)
 
-
 func take_damage(dmg: int, crit: bool = false) -> void:
 	hp -= dmg
 
 	if hp <= 0:
 		die()
 
-
 func die():
 	queue_free()
+
+func _input_event(_viewport, event, _shape_idx):
+	if event is InputEventMouseButton \
+	and event.pressed \
+	and event.button_index == MOUSE_BUTTON_LEFT:
+		var cam = get_tree().current_scene.get_node("CameraRig")
+		if cam:
+			cam.select_unit(self)
+		get_viewport().set_input_as_handled()

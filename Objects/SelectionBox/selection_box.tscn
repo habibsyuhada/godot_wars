@@ -1,0 +1,22 @@
+[gd_scene load_steps=6 format=3 uid="uid://bosflhxc1nxf8"]
+
+[ext_resource type="Texture2D" uid="uid://brjhnuypfs2bt" path="res://Assets/UI/selectbox_tl.png" id="1_45lyw"]
+[ext_resource type="Script" uid="uid://cvyhgmdmksdb8" path="res://Objects/SelectionBox/selection_box.gd" id="1_ttv54"]
+[ext_resource type="Texture2D" uid="uid://dn3bb36spya03" path="res://Assets/UI/selectbox_tr.png" id="2_ttv54"]
+[ext_resource type="Texture2D" uid="uid://cvqcla2qdg7im" path="res://Assets/UI/selectbox_bl.png" id="3_40lu3"]
+[ext_resource type="Texture2D" uid="uid://ckk0jtk7ujuvn" path="res://Assets/UI/selectbox_br.png" id="4_xsstg"]
+
+[node name="SelectionBox" type="Node2D"]
+script = ExtResource("1_ttv54")
+
+[node name="TL" type="Sprite2D" parent="."]
+texture = ExtResource("1_45lyw")
+
+[node name="TR" type="Sprite2D" parent="."]
+texture = ExtResource("2_ttv54")
+
+[node name="BL" type="Sprite2D" parent="."]
+texture = ExtResource("3_40lu3")
+
+[node name="BR" type="Sprite2D" parent="."]
+texture = ExtResource("4_xsstg")

@@ -1,0 +1,55 @@
+[gd_scene load_steps=3 format=3 uid="uid://cfura4fjak330"]
+
+[ext_resource type="Script" uid="uid://bsqysng8bsg5m" path="res://Objects/UnitInfoPanel/unit_info_panel.gd" id="1_scrqc"]
+[ext_resource type="Texture2D" uid="uid://byty1bv6ss4l1" path="res://Assets/UI/dt_box_9slice_all.png" id="2_cfrch"]
+
+[node name="UnitInfoPanel" type="CanvasLayer"]
+script = ExtResource("1_scrqc")
+
+[node name="Control" type="Control" parent="."]
+layout_mode = 3
+anchors_preset = 11
+anchor_left = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 0
+grow_vertical = 2
+
+[node name="NinePatchRect" type="NinePatchRect" parent="Control"]
+layout_mode = 1
+anchors_preset = 11
+anchor_left = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -175.0
+grow_horizontal = 0
+grow_vertical = 2
+texture = ExtResource("2_cfrch")
+patch_margin_left = 3
+patch_margin_top = 3
+patch_margin_right = 3
+patch_margin_bottom = 3
+
+[node name="MarginContainer" type="MarginContainer" parent="Control/NinePatchRect"]
+layout_mode = 0
+offset_left = 4.0
+offset_right = 44.0
+offset_bottom = 131.0
+
+[node name="VBoxContainer" type="VBoxContainer" parent="Control/NinePatchRect/MarginContainer"]
+layout_mode = 2
+
+[node name="NameLabel" type="Label" parent="Control/NinePatchRect/MarginContainer/VBoxContainer"]
+layout_mode = 2
+
+[node name="RaceLabel" type="Label" parent="Control/NinePatchRect/MarginContainer/VBoxContainer"]
+layout_mode = 2
+
+[node name="LevelLabel" type="Label" parent="Control/NinePatchRect/MarginContainer/VBoxContainer"]
+layout_mode = 2
+
+[node name="HPLabel" type="Label" parent="Control/NinePatchRect/MarginContainer/VBoxContainer"]
+layout_mode = 2
+
+[node name="AttackLabel" type="Label" parent="Control/NinePatchRect/MarginContainer/VBoxContainer"]
+layout_mode = 2

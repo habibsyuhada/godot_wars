@@ -1,15 +1,11 @@
-[gd_scene load_steps=4 format=3 uid="uid://bxcfheg0uf3mq"]
+[gd_scene load_steps=3 format=3 uid="uid://bxcfheg0uf3mq"]
 
 [ext_resource type="Script" uid="uid://dk3oomcil14h" path="res://Objects/Camera/camera_rig.gd" id="1_7wt3r"]
 [ext_resource type="PackedScene" uid="uid://bosflhxc1nxf8" path="res://Objects/SelectionBox/selection_box.tscn" id="2_jqx2t"]
-[ext_resource type="PackedScene" uid="uid://cfura4fjak330" path="res://Objects/UnitInfoPanel/UnitInfoPanel.tscn" id="3_3ttk8"]
 
 [node name="CameraRig" type="Node2D"]
 script = ExtResource("1_7wt3r")
-unit_info_panel_path = NodePath("UnitInfoPanel")
 
 [node name="Camera2D" type="Camera2D" parent="."]
 
 [node name="SelectionBox" parent="." instance=ExtResource("2_jqx2t")]
-
-[node name="UnitInfoPanel" parent="." instance=ExtResource("3_3ttk8")]

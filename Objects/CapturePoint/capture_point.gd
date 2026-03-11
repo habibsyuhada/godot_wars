@@ -16,7 +16,6 @@ var _team_counts: Dictionary = {}
 var _capturing_team: int = 0
 
 func _ready() -> void:
-	print(self, " add to group capture_point")
 	add_to_group("capture_point")
 
 	# pastikan timer one_shot dan connect sekali

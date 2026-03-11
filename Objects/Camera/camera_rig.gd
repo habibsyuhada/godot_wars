@@ -1,42 +1,53 @@
 extends Node2D
 
-@export var layers_root_path: NodePath   # parent node yang berisi TileMapLayer
+@export var layers_root_path: NodePath
 @export var min_zoom: float = 0.5
 @export var max_zoom: float = 2.5
 @export var zoom_step: float = 0.1
 @export var zoom_speed: float = 0.015
 @export var drag_sensitivity: float = 1.0
 
+@export var follow_lerp_speed: float = 8.0
+@export var stop_follow_on_manual_pan: bool = true
+
 @onready var cam: Camera2D = $Camera2D
+@onready var selection_box = $SelectionBox
 @onready var layers_root: Node = get_node(layers_root_path)
 
-# ===== Touch tracking =====
+@export var unit_info_panel_path: NodePath
+@onready var unit_info_panel = get_node_or_null(unit_info_panel_path)
+
 var _dragging: bool = false
 var _last_mouse_pos: Vector2 = Vector2.ZERO
 
-var _touches: Dictionary = {} # int -> Vector2
+var _touches: Dictionary = {}
 var _pinching: bool = false
 var _pinch_start_dist: float = 0.0
 var _pinch_start_zoom: Vector2 = Vector2.ONE
 var _pinch_center: Vector2 = Vector2.ZERO
 
-# ===== Map bounds (global coords) =====
 var _map_min: Vector2 = Vector2.ZERO
 var _map_max: Vector2 = Vector2.ZERO
 var _has_bounds: bool = false
+
+var follow_target: Node2D = null
 
 func _ready() -> void:
 	cam.zoom = _clamp_zoom(cam.zoom)
 	_recompute_layers_bounds()
 	_clamp_to_bounds()
 
-func _process(_delta: float) -> void:
+func _process(delta: float) -> void:
+	_update_follow(delta)
 	_clamp_to_bounds()
 
 func _unhandled_input(event: InputEvent) -> void:
 	# ===== Mouse =====
 	if event is InputEventMouseButton:
 		var e: InputEventMouseButton = event
+		
+		if e.button_index == MOUSE_BUTTON_LEFT and e.pressed:
+			clear_follow_target()
 
 		if e.button_index == MOUSE_BUTTON_WHEEL_UP and e.pressed:
 			_zoom_at_screen_pos(-zoom_step, e.position)
@@ -48,6 +59,9 @@ func _unhandled_input(event: InputEvent) -> void:
 		if (e.button_index == MOUSE_BUTTON_MIDDLE or e.button_index == MOUSE_BUTTON_RIGHT):
 			_dragging = e.pressed
 			_last_mouse_pos = e.position
+			
+			if e.pressed and stop_follow_on_manual_pan:
+				clear_follow_target()
 			return
 
 	if event is InputEventMouseMotion and _dragging and not _pinching:
@@ -71,15 +85,34 @@ func _unhandled_input(event: InputEvent) -> void:
 		_touches[d.index] = d.position
 
 		if _touches.size() == 1 and not _pinching:
+			if stop_follow_on_manual_pan:
+				clear_follow_target()
 			_pan_by_screen_delta(d.relative)
 			return
+
 		if _touches.size() >= 2:
 			_handle_pinch()
 			return
 
-# =====================
-# Pan & Zoom
-# =====================
+func set_follow_target(target: Node2D) -> void:
+	follow_target = target
+
+func clear_follow_target() -> void:
+	follow_target = null
+	#clear_selection()
+
+func _update_follow(delta: float) -> void:
+	if follow_target == null:
+		return
+
+	if not is_instance_valid(follow_target):
+		follow_target = null
+		return
+
+	global_position = global_position.lerp(
+		follow_target.global_position,
+		clamp(follow_lerp_speed * delta, 0.0, 1.0)
+	)
 
 func _pan_by_screen_delta(delta: Vector2) -> void:
 	var world_delta: Vector2 = delta * drag_sensitivity * (1.0 / cam.zoom.x)
@@ -97,17 +130,11 @@ func _set_zoom_at_screen_pos(target_zoom: Vector2, screen_pos: Vector2) -> void:
 	global_position += (before - after)
 
 func _screen_to_world(screen_pos: Vector2) -> Vector2:
-	# Konversi koordinat layar (viewport) -> koordinat world (global)
-	# get_canvas_transform(): world->screen, jadi kita invert untuk screen->world
 	return get_viewport().get_canvas_transform().affine_inverse() * screen_pos
 	
 func _clamp_zoom(z: Vector2) -> Vector2:
 	var v: float = clamp(z.x, min_zoom, max_zoom)
 	return Vector2(v, v)
-
-# =====================
-# Touch pinch
-# =====================
 
 func _update_pinch_state() -> void:
 	if _touches.size() >= 2:
@@ -146,10 +173,6 @@ func _handle_pinch() -> void:
 	target_zoom = _clamp_zoom(target_zoom)
 
 	_set_zoom_at_screen_pos(target_zoom, _pinch_center)
-
-# =====================
-# Bounds from TileMapLayer(s)
-# =====================
 
 func _recompute_layers_bounds() -> void:
 	_has_bounds = false
@@ -190,8 +213,8 @@ func _recompute_layers_bounds() -> void:
 		else:
 			gmin.x = min(gmin.x, layer_gmin.x)
 			gmin.y = min(gmin.y, layer_gmin.y)
-			gmax.x = max(gmax.x, layer_gmax.x)-32
-			gmax.y = max(gmax.y, layer_gmax.y)-32
+			gmax.x = max(gmax.x, layer_gmax.x) - 32
+			gmax.y = max(gmax.y, layer_gmax.y) - 32
 
 	if not found_any:
 		push_warning("CameraRig: semua TileMapLayer get_used_rect() kosong.")
@@ -221,7 +244,6 @@ func _clamp_to_bounds() -> void:
 
 	var p: Vector2 = global_position
 
-	# kalau map lebih kecil dari viewport, center
 	if min_x > max_x:
 		p.x = (_map_min.x + _map_max.x) * 0.5
 	else:
@@ -233,3 +255,20 @@ func _clamp_to_bounds() -> void:
 		p.y = clamp(p.y, min_y, max_y)
 
 	global_position = p
+
+func select_unit(unit: Node2D):
+	var size := Vector2(64,64)
+
+	if unit.has_node("Sprite2D"):
+		var sprite: Sprite2D = unit.get_node("Sprite2D")
+		if sprite.texture:
+			size = sprite.texture.get_size() * sprite.scale
+
+	selection_box.set_target(unit,size)
+	set_follow_target(unit)
+	
+	if unit_info_panel:
+		unit_info_panel.show_unit_info(unit)
+	
+func clear_selection():
+	selection_box.clear_target()
