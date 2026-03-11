@@ -1,0 +1,19 @@
+[gd_scene load_steps=3 format=3 uid="uid://bdbt2g88u6xrg"]
+
+[ext_resource type="StyleBox" uid="uid://c6kytpasn67sh" path="res://Objects/UiPixelButton/ui_pixel_button.tres" id="1_qi3pb"]
+[ext_resource type="Script" uid="uid://brjl2xfuriffr" path="res://Objects/UiPixelButton/ui_pixel_button.gd" id="2_46atg"]
+
+[node name="UiPixelButton" type="Button"]
+offset_right = 8.0
+offset_bottom = 8.0
+theme_override_colors/font_color = Color(0.08078333, 0.08078336, 0.08078327, 1)
+theme_override_colors/font_focus_color = Color(0.08235294, 0.08235294, 0.08235294, 1)
+theme_override_colors/font_pressed_color = Color(0.08235294, 0.08235294, 0.08235294, 1)
+theme_override_colors/font_hover_color = Color(0.08235294, 0.08235294, 0.08235294, 1)
+theme_override_colors/font_hover_pressed_color = Color(0.08235294, 0.08235294, 0.08235294, 1)
+theme_override_colors/font_disabled_color = Color(0.08235294, 0.08235294, 0.08235294, 1)
+theme_override_styles/normal = ExtResource("1_qi3pb")
+theme_override_styles/hover = ExtResource("1_qi3pb")
+theme_override_styles/disabled_mirrored = ExtResource("1_qi3pb")
+theme_override_styles/focus = ExtResource("1_qi3pb")
+script = ExtResource("2_46atg")

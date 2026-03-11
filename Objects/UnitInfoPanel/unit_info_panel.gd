@@ -5,10 +5,13 @@ extends CanvasLayer
 @onready var hp_label = $Control/NinePatchRect/MarginContainer/VBoxContainer/HPLabel
 @onready var attack_label = $Control/NinePatchRect/MarginContainer/VBoxContainer/AttackLabel
 
+@onready var close_btn = $CloseButton
+
 var current_unit = null
 
 func _ready() -> void:
 	visible = false
+	close_btn.pressed.connect(_on_close_pressed)
 
 func _process(_delta: float) -> void:
 	if current_unit == null:
@@ -37,3 +40,6 @@ func update_unit_info() -> void:
 func hide_panel() -> void:
 	current_unit = null
 	visible = false
+	
+func _on_close_pressed():
+	hide_panel()
