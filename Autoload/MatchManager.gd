@@ -3,6 +3,10 @@ extends Node
 var capture_points: Array = []
 
 func _ready():
+	if GameState.predicted_winner_team == 0:
+		get_tree().change_scene_to_file("res://scenes/TeamSelectMenu.tscn")
+		return
+		
 	capture_points = get_tree().get_nodes_in_group("capture_point")
 
 	for point in capture_points:

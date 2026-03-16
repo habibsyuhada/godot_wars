@@ -1,8 +1,8 @@
 extends Control
 
 func _ready():
-	$StartButton.pressed.connect(_on_start_pressed)
-	$QuitButton.pressed.connect(_on_quit_pressed)
+	$HBoxContainer/VBoxContainer/StartButton.pressed.connect(_on_start_pressed)
+	$HBoxContainer/VBoxContainer/QuitButton.pressed.connect(_on_quit_pressed)
 
 func _on_start_pressed():
 	GameState.reset_game()

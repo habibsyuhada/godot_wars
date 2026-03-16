@@ -1,9 +1,9 @@
 extends Control
 
 func _ready():
-	$Team1Button.pressed.connect(_on_team_1_pressed)
-	$Team2Button.pressed.connect(_on_team_2_pressed)
-	$BackButton.pressed.connect(_on_back_pressed)
+	$VBoxContainer/HBoxContainer/Team1Button.pressed.connect(_on_team_1_pressed)
+	$VBoxContainer/HBoxContainer/Team2Button.pressed.connect(_on_team_2_pressed)
+	$VBoxContainer/BackButton.pressed.connect(_on_back_pressed)
 
 func _on_team_1_pressed():
 	_start_game_with_prediction(1)
