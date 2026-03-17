@@ -32,6 +32,8 @@ func on_timeout():
 	transitioned.emit(self, "wandering")
 	
 func find_point_timer_on_timeout():
+	if enemy.target_point != null:
+		return
 	# 1) tentuin goal
 	# opsi A: cari point musuh terdekat
 	var goal: CapturePoint = CaptureGraph.get_closest_enemy_point(enemy.source_point, enemy.team)

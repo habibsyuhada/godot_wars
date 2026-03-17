@@ -1,8 +1,8 @@
 extends Node2D
 
 @export var layers_root_path: NodePath
-@export var min_zoom: float = 0.5
-@export var max_zoom: float = 2.5
+@export var min_zoom: float = 0.7
+@export var max_zoom: float = 2.0
 @export var zoom_step: float = 0.1
 @export var zoom_speed: float = 0.015
 @export var drag_sensitivity: float = 1.0
